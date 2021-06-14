@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body><h1>OAuth Approval</h1>
+<p th:text="'Do you authorize ' + ${thirdPartyName} + ' to access your protected resources?'"></p>
+
+<form id="confirmationForm" name="confirmationForm" th:action="@{/oauth/authorize}" method="post">
+  <input name="user_oauth_approval" value="true" type="hidden"/>
+  <input th:if="${csrfToken}" type="hidden" name="_csrf" th:value="${csrfToken}"/>
+  <ul>
+    <li th:each="scope: ${scopes}">
+      <div class="form-group">[[${scope}]]:
+        <input type="radio" th:name="${scope}" value="true">Approve</input>
+        <input type="radio" th:name="${scope}" value="false" checked>Deny</input>
+      </div>
+    </li>
+  </ul>
+  <label><input name="authorize" value="Authorize" type="submit"/></label></form>
+</body>
+</html>
